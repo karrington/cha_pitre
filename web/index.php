@@ -1,6 +1,8 @@
 <?php
-
-
+$str = "que j'aime le php";
+$regExp = "#ph[a-z]#i";
+echo preg_match($regExp, $str);
+exit;
 
 
 session_start();
