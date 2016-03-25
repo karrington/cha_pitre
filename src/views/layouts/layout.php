@@ -4,7 +4,7 @@
         <meta charset="utf-8"/>
         <title>MON SITE</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="style_1.css" media="screen">
     </head>
     <body class="container-fluid">
 
@@ -30,9 +30,9 @@
                         </ul>
                         <form class="navbar-form navbar-left" role="search" >
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Recherche">
+                                <input type="text" class="form-control" placeholder="Recherche" name="recherche">
                             </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
+                            <button type="submit" class="btn btn-default">Rechercher</button>
                         </form>
                         <ul class="nav navbar-nav navbar-right">
                             <?php

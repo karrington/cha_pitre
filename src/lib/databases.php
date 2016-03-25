@@ -17,35 +17,45 @@ function checkLogin($login, $password) {
     return $rs['ok'];
 }
 
-function getCatalogue($page = 1, $nbLivreParPage=null) {
+function getCatalogue($page = 1, $nbLivreParPage = null, $recherche = null) {
     $pdo = getPDO();
-    if($nbLivreParPage == null){
-        $sql = "SELECT * FROM catalogues";
-        
-    }else {
-        $offset = ($page-1)*$nbLivreParPage;
-        $sql = "SELECT * FROM catalogues LIMIT $nbLivreParPage OFFSET $offset";
+    $condition = getConditionLivre($recherche);
+    if ($nbLivreParPage == null) {
+        $sql = "SELECT * FROM catalogues $condition";
+    } else {
+        $offset = ($page - 1) * $nbLivreParPage;
+        $sql = "SELECT * FROM catalogues $condition LIMIT $nbLivreParPage OFFSET $offset";
     }
-    
-    
-//    
-//    $sql = "SELECT * FROM catalogues";
+
     $rs = $pdo->query($sql);
     return $rs;
 }
 
+function getConditionLivre($recherche) {
+
+    $condition = "";
+    if ($recherche != null) {
+        $recherche = "%$recherche%";
+        $condition = "WHERE  
+        titre LIKE '$recherche' 
+        OR nom LIKE '$recherche'
+        OR nom_auteur LIKE '$recherche'";
+    }
+    return $condition;
+}
 
 //affichage du nombre total de livres dans le catalogue 
-function getNbLivres() {
+function getNbLivres($recherche = null) {
     $pdo = getPDO();
-    $sql = "SELECT COUNT(*) as nb FROM livres";
+    $condition = getConditionLivre($recherche);
+    $sql = "SELECT COUNT(*) as nb FROM catalogues $condition";
     $rs = $pdo->query($sql)->fetch();
     return $rs ['nb'];
 }
 
 function getClientInfo($login) {
     $pdo = getPDO();
-    $sql = "SELECT * FROM client WHERE login=?";
+    $sql = "SELECT * FROM client WHERE login = ?";
     $stm = $pdo->prepare($sql);
     $stm->execute(array($login));
     $rs = $stm->fetch();
@@ -54,7 +64,7 @@ function getClientInfo($login) {
 
 function checkProduitPanier($id) {
     $pdo = getPDO();
-    $sql = "SELECT EXISTS(SELECT * FROM panier WHERE produit_id=?)as ok";
+    $sql = "SELECT EXISTS(SELECT * FROM panier WHERE produit_id = ?)as ok";
     $stmt = $pdo->prepare($sql);
     $stml->execute(array(
         $id,
@@ -67,11 +77,11 @@ function ajoutQuantitePanier($idProduit, $idClient, $qt = 1) {
 
     $pdo = getPDO();
     $sql = "UPDATE panier SET"
-            . "produit_id=:produitId,"
-            . "client_id=:clientId,"
-            . "qt=(qt+:qt)"
-            . "WHERE produit_id=:produitId AND "
-            . "client_id=:clientId";
+            . "produit_id = :produitId, "
+            . "client_id = :clientId, "
+            . "qt = (qt+:qt)"
+            . "WHERE produit_id = :produitId AND "
+            . "client_id = :clientId";
     $stm = $pdo->prepare($sql);
     $stm->execute(array(
         'produitId' => $idProduit,

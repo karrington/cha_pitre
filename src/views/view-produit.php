@@ -1,6 +1,6 @@
-<h1>Liste des produits<?= $nbTotal ?></h1>
+<h1>Liste des produits <?= $nbTotal ?></h1>
 
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-hover ">
     <tr>
         <th>Titre</th>
         <th>Genre</th>
@@ -37,7 +37,14 @@
         } else {
             $active ="";
         }
-        echo"<li class ='$active' ><a href='/produit?page=$i'>$i</a></li>";
+        
+        
+        $critere ="";
+        if(!empty($recherche)){
+            $critere ="&recherche=$recherche";
+        }
+        
+        echo"<li class ='$active' ><a href='/produit?page=$i$critere'>$i</a></li>";
     }
     ?>
 </ul>

@@ -1,4 +1,8 @@
 <?php
+
+
+
+
 session_start();
 
 define('ROOT_PATH', realpath(getcwd().'/../src/'));
