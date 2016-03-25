@@ -10,7 +10,9 @@ if ($nbTotalLivres % $nbLivresParPages > 0) {
     $nbpages++;
 }
 $response = getResponse('view-produit', array(
-    'catalogue' => $catalogue
+    'catalogue' => $catalogue,
+    'nbPages'=>$nbpages,
+    'nbTotal'=>$nbTotalLivres
         ));
 echo $response;
 ?>
