@@ -1,6 +1,6 @@
 <?php
 $str = "que j'aime le php";
-$regExp = "#ph[a-z]#i";
+$regExp = "#^[0-9]$#i";
 echo preg_match($regExp, $str);
 exit;
 
