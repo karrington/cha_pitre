@@ -17,9 +17,19 @@ function checkLogin($login, $password) {
     return $rs['ok'];
 }
 
-function getCatalogue() {
+function getCatalogue($page = 1, $nbLivreParPage=null) {
     $pdo = getPDO();
-    $sql = "SELECT * FROM catalogues";
+    if($nbLivreParPage == null){
+        $sql = "SELECT * FROM catalogues";
+        
+    }else {
+        $offset = ($page-1)*$nbLivreParPage;
+        $sql = "SELECT * FROM catalogues LIMIT $nbLivreParPage OFFSET $offset";
+    }
+    
+    
+//    
+//    $sql = "SELECT * FROM catalogues";
     $rs = $pdo->query($sql);
     return $rs;
 }

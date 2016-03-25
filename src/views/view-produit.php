@@ -1,4 +1,5 @@
-<h1>Liste des produits</h1>
+<h1>Liste des produits<?= $nbTotal ?></h1>
+
 <table class="table table-striped table-bordered">
     <tr>
         <th>Titre</th>
@@ -26,5 +27,19 @@
     </a>
 <?php endforeach ?>
 </table>
+
+<ul class="pagination">
+    <?php
+    for ($i = 1; $i <= $nbPages; $i++) {
+        
+        if($i == $pageActive){
+            $active = "active";
+        } else {
+            $active ="";
+        }
+        echo"<li class ='$active' ><a href='/produit?page=$i'>$i</a></li>";
+    }
+    ?>
+</ul>
 
 
