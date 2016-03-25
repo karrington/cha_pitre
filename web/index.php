@@ -1,6 +1,6 @@
 <?php
 $str = "que j'aime le php";
-$regExp = "#;
+$regExp = "#^(0[1-9])([- \.][0-9]{2}){4}$#";
 echo preg_match($regExp, $str);
 exit;
 
